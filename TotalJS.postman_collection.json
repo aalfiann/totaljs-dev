@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "20a666f1-b7d2-436f-b125-ec68471a58d3",
+		"name": "TotalJS",
+		"description": "TotalJS Dev Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[Create] 127.0.0.1:8000/api/products",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-token",
+						"value": "d88ad6cd-1112-4fc9-a20a-6ff75ed4d2da",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"Name\":\"Battery Alkaline\",\n\"Categories\":\"Utilities\",\n\"Stock\":20,\n\"Price\":7000\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/api/products/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Read] 127.0.0.1:8000/api/products/19062123050001acb1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "d88ad6cd-1112-4fc9-a20a-6ff75ed4d2da",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/api/products/19062123050001acb1",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"19062123050001acb1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Update] 127.0.0.1:8000/api/products/19062202010001rmw1/",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-token",
+						"value": "d88ad6cd-1112-4fc9-a20a-6ff75ed4d2da",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Name\":\"Battery New Alkaline\",\n\t\"Categories\":\"Utilities\"\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:8000/api/products/19062202010001rmw1/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"19062202010001rmw1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Delete] 127.0.0.1:8000/api/products/19062123020001oak1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "d88ad6cd-1112-4fc9-a20a-6ff75ed4d2da",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/api/products/19062123020001oak1",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"19062123020001oak1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Search] 127.0.0.1:8000/api/products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-token",
+						"value": "d88ad6cd-1112-4fc9-a20a-6ff75ed4d2da",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8000/api/products?search=&=",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": ""
+						},
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

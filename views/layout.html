@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=11" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="robots" content="all,follow" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,700&subset=latin,latin-ext" />
+	<link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	@{import('meta', 'head', 'default.css', 'default.js', 'favicon.ico')}
+
+	<script src='/socket.io/socket.io.js'></script>
+
+</head>
+<body>
+
+
+	<div class="container-background">
+		<div class="container">
+			<div class="center"><a href="/"><img src="/img/logo.png" alt="total.js - web application framework for node.js" border="0" /></a></div>
+			<br />
+			@{body}
+		</div>
+	</div>
+	<footer class="footer">
+		&copy; Thank you for using <b>total.js</b>.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+databases/*
+!databases/.gitkeep
+node_modules/
+tmp/
+debug.pid
+package-lock.json

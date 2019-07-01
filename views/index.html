@@ -1,0 +1,55 @@
+@{title('Total.js with socket.io')}
+
+<script>
+	var socket=io.connect();
+	socket.on('receive',function(message){
+    addMessage(message);
+	});
+
+	var sendMessage = function(){
+		var value=document.getElementById('message').value;
+		console.log('Sent '+value);
+		socket.emit('message',{message:value});
+		addMessage(value);
+		document.getElementById('message').value='';
+	};
+
+   var keyPress = function(event){
+		if (event.keyCode==13){
+			sendMessage();
+		}
+   };
+
+   var addMessage = function(message){
+	   console.log('Received %s',message);
+      document.getElementById("messages").value += message+"\n";
+   };
+
+</script>
+
+<hr />
+<div class="row">
+	<div class="form-group">
+		<label for="comment">Messages</label>
+		<textarea class="form-control" rows="10" id="messages" readonly></textarea>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 ">
+		<div class="input-group">
+			<input type="text" id="message" class="form-control" placeholder="Input message..." onkeypress="keyPress(event)">
+			<span class="input-group-btn">
+				<button class="btn btn-success" type="button" onclick="sendMessage()"><span class="fa fa-envelope"> </span>SUBMIT</button>
+			</span>
+		</div><!-- /input-group -->
+	</div>
+</div>
+	
+<br />
+<div class="center">
+	<h3><b>Total.js with socket.io</b></h3>
+		The node.js framework for all web developers with everything what you need.
+</div>
+<br />
+<br />
