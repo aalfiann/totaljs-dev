@@ -4,6 +4,7 @@ exports.install = function() {
 	
 	ROUTE('/', plain_version);
 	F.route('/socket', view_socket);
+	ROUTE('/timeout_test', timeout_test, [ timeout= 15000 ]);
 };
 
 function plain_version() {
@@ -14,4 +15,14 @@ function plain_version() {
 function view_socket() {
 	var self = this;
 	self.view('index');
+}
+
+function timeout_test() {
+    var self = this;
+	
+    console.log('I am here.');
+
+    setTimeout(function() {
+        self.view('index');
+	}, 10000);
 }
