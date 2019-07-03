@@ -1,15 +1,27 @@
 @{title('Total.js with socket.io')}
 
 <script>
+
 	var socket=io.connect();
+
+	userid = '@{model.userid}';
+	conversation_id = '@{model.chatroom}';
+
+	socket.emit('subscribe', conversation_id);
+	
+	socket.on('connect', function (data) {
+		
+	});
+
 	socket.on('receive',function(message){
-    addMessage(message);
+    	addMessage(message);
 	});
 
 	var sendMessage = function(){
 		var value=document.getElementById('message').value;
 		console.log('Sent '+value);
-		socket.emit('message',{message:value});
+		console.log(conversation_id);
+		socket.emit('message',{user_id:userid,chat_id:conversation_id,message:value});
 		addMessage(value);
 		document.getElementById('message').value='';
 	};
@@ -21,7 +33,7 @@
    };
 
    var addMessage = function(message){
-	   console.log('Received %s',message);
+	   console.log('Sent %s',message);
       document.getElementById("messages").value += message+"\n";
    };
 
