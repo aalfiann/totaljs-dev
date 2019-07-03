@@ -23,13 +23,18 @@ F.on("load", function() {
     this.io = socketio.listen(this.server);
 
     this.io.on('connection',function(socket){
-        console.log('New connection');
+        
+        console.log('New connection id: '+socket.id);
 
         socket.on('message',function(data){
             console.log(data);
             socket.broadcast.emit('receive',data.message);
-
         });
+
+        socket.on('disconnect', function (data) {
+            console.log('Client '+ socket.id +' disconnected')
+        });
+
     });
 });
 
