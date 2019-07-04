@@ -1,17 +1,20 @@
 exports.install = function() {
 
 	// Routes
-    ROUTE('/consult/', view_consult);
-    ROUTE('/consult/{chat_id}/{user_id}', view_consultroom);
+    ROUTE('/consult/{user_id}', view_consult);
+    ROUTE('/consult/{user_id}/{chat_id}', view_consultroom);
 
 };
 
-function view_consult() {
+function view_consult(user_id) {
     var self = this;
-	self.view('consult',{consultroom: 'lobby',userid:UID()});
+    var options = {};
+
+    options.user_id = user_id;
+	self.view('consult',{consultroom: 'lobby',userid:user_id});
 }
 
-function view_consultroom(chat_id,user_id) {
+function view_consultroom(user_id,chat_id) {
     var self = this;
     var options = {};
 

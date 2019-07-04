@@ -24,11 +24,18 @@ F.on("load", function() {
 
     this.io.on('connection',function(socket){
 
-        console.log('New connection id: '+socket.id);
+        console.log('Client id: '+socket.id+' is connected');
 
-        socket.on('subscribe', function(chat_id) {
-            console.log('joining chat room: ', chat_id);
-            socket.join(chat_id);
+        socket.emit('onConsultActive',function(data) {
+            // check is chat_id active or not (if not then info client with expired information)
+        });
+
+        socket.on('subscribe', function(data) {
+            console.log(data.user_id+' is joining chat room: ', data.chat_id);
+            socket.join(data.chat_id);
+            socket.broadcast.to(data.chat_id).emit('receive', {date:data.date,user_id:data.user_id,message:'is join to this chat.'});
+            // write logic to load history chat and make them status in read (check who is the owner of the message)
+            // send emit to load event with json data message
         });
 
         socket.on('message', function(data) {
@@ -36,13 +43,23 @@ F.on("load", function() {
                 socket_id:socket.id,
                 chat_id:data.chat_id,
                 user_id:data.user_id,
+                date:data.date,
                 message:data.message
             });
-            socket.broadcast.to(data.chat_id).emit('receive', {user_id:data.user_id,message:data.message});
+            socket.broadcast.to(data.chat_id).emit('receive', {date:data.date,user_id:data.user_id,message:data.message});
+            // write logic to saving message to database with message status received in database
+        });
+
+        socket.on('isRead', function(data) {
+            // write logic to set message status to read in database
+        });
+
+        socket.on('isTyping', function(data) {
+            // write logic to send message status is typing
         });
 
         socket.on('disconnect', function (data) {
-            console.log('Client '+ socket.id +' disconnected');
+            console.log('Client '+ socket.id +' is disconnected');
         });
 
     });

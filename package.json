@@ -5,7 +5,8 @@
 	"main": "debug.js",
 	"dependencies": {
 		"socket.io": "latest",
-		"total.js": "latest"
+		"total.js": "latest",
+		"uuid": "^3.3.2"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
