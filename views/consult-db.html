@@ -1,0 +1,112 @@
+@{title('Total.js with socket.io')}
+
+<script>
+
+	var socket=io.connect();
+
+	usertype = parseInt('@{model.usertype}');
+	userid = '@{model.userid}';
+	conversation_id = '@{model.consultroom}';
+
+	socket.emit('join', {akun_id:userid,transaksi_konsul_id:conversation_id});
+	socket.on('joined', function (data) {
+		joinedMessage(data);
+	});
+
+	socket.on('loadHistory', function (data) {
+		console.log(data);
+	});
+
+	socket.on('connect', function (data) {
+		console.log('connect to server is successful');
+	});
+
+	socket.on('validateConsult', function(data) {
+		console.log(data);
+	});
+
+	socket.emit('reading','2efd3fe6-bf7e-4128-9861-2c4f38486c8c');
+
+	socket.on('read',function(data){
+		console.log(data);
+	});
+
+	socket.on('typed',function(data){
+		console.log(data);
+	});
+
+	socket.on('received',function(data){
+		receivedMessage(data);
+	});
+
+	socket.on('disconnect',function(data){
+		console.log('connection disconnected!');
+	});
+
+	var sendMessage = function(){
+		var value=document.getElementById('message').value;
+		var message = {
+			akun_id:userid,
+			akun_type:usertype,
+			transaksi_konsul_id:conversation_id,
+			message_type_id:1,
+			isi_messages:value
+		};
+		socket.emit('message',message);
+		addMessage(message);
+		document.getElementById('message').value='';
+	};
+
+   var keyPress = function(event){
+		if (event.keyCode==13){
+			sendMessage();
+		}
+   };
+
+   var addMessage = function(data){
+		console.log('Sent %s',JSON.stringify(data));
+    	document.getElementById("messages").value += data.akun_id+': '+data.isi_messages+"\n";
+   };
+
+   var receivedMessage = function(data){
+		console.log('Received %s',JSON.stringify(data));
+		if(data.sts_res == "true") document.getElementById("messages").value += data.data[0].akun_id+': '+data.data[0].isi_messages+"\n";
+   };
+
+   var joinedMessage = function(data){
+		console.log('Joined %s',JSON.stringify(data));
+		document.getElementById("messages").value += data.akun_id+': '+data.isi_messages+"\n";
+   };
+
+   var typingMessage = function(){
+		socket.emit('typing',{transaksi_konsul_id:conversation_id,akun_id:userid});
+   }
+
+</script>
+
+<hr />
+<div class="row">
+	<div class="form-group">
+		<label for="comment">Messages</label>
+		<textarea class="form-control" rows="10" id="messages" readonly></textarea>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 ">
+		<div class="input-group">
+			<input type="text" id="message" class="form-control" placeholder="Input message..." onkeypress="keyPress(event)" onfocus="typingMessage()">
+			<span class="input-group-btn">
+				<button class="btn btn-success" type="button" onclick="sendMessage()"><span class="fa fa-envelope"> </span>SUBMIT</button>
+			</span>
+		</div><!-- /input-group -->
+	</div>
+</div>
+	
+<br />
+<div class="center">
+	<h3><b>Total.js with socket.io</b></h3>
+		The node.js framework for all web developers with everything what you need.
+</div>
+<br />
+<br />

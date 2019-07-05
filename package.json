@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"main": "debug.js",
 	"dependencies": {
+		"revalidator": "^0.3.1",
 		"socket.io": "latest",
 		"total.js": "latest",
 		"uuid": "^3.3.2"
