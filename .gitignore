@@ -1,5 +1,6 @@
 databases/*
 !databases/.gitkeep
+!databases/tr_transaksi_konsul.nosql
 node_modules/
 tmp/
 debug.pid
