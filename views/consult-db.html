@@ -14,7 +14,7 @@
 	});
 
 	socket.on('loadHistory', function (data) {
-		console.log(data);
+		console.log(JSON.stringify(data));
 	});
 
 	socket.on('connect', function (data) {
@@ -22,17 +22,17 @@
 	});
 
 	socket.on('validateConsult', function(data) {
-		console.log(data);
+		console.log(JSON.stringify(data));
 	});
 
-	socket.emit('reading','2efd3fe6-bf7e-4128-9861-2c4f38486c8c');
+	socket.emit('reading',{transaksi_konsul_id:conversation_id,messages_id:'56d5ef8e-4d8f-47b3-b19e-15651839426b'});
 
 	socket.on('read',function(data){
-		console.log(data);
+		console.log(JSON.stringify(data));
 	});
 
 	socket.on('typed',function(data){
-		console.log(data);
+		console.log(JSON.stringify(data));
 	});
 
 	socket.on('received',function(data){
@@ -75,7 +75,7 @@
 
    var joinedMessage = function(data){
 		console.log('Joined %s',JSON.stringify(data));
-		document.getElementById("messages").value += data.akun_id+': '+data.isi_messages+"\n";
+		if(data.sts_res == "true") document.getElementById("messages").value += data.data[0].akun_id+': '+data.data[0].isi_messages+"\n";
    };
 
    var typingMessage = function(){

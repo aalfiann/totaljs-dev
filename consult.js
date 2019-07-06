@@ -35,12 +35,9 @@ F.on("load", function() {
         socket.on('join', function(data) {
             console.log(data.akun_id+' is joining chat room: ', data.transaksi_konsul_id);
             socket.join(data.transaksi_konsul_id);
-            socket.broadcast.to(data.transaksi_konsul_id).emit('joined', {
-                date:new Date().toISOString().replace("T", " ").replace("Z", "").substr(0,19),
-                akun_id:data.akun_id,
-                isi_messages:'is join to this chat.'
-            });
-            // send emit to load event with json data message
+            // send emit to joined event
+            wsconsult.joinRoom(data,socket);
+            // send emit to load history event
             wsconsult.loadMessages(data.transaksi_konsul_id,socket);
             // validate consult if expired then disconnect
             wsconsult.validateConsult(data.transaksi_konsul_id,socket);

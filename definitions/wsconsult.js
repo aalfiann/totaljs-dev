@@ -108,6 +108,19 @@ function insertMessages(data){
 }
 
 /**
+ * Broadcast to all client if new user has joined to the chat room
+ * @param {*} data
+ * @param {*} socket
+ * @return {callback} emit to joined event 
+ */
+function joinRoom(data,socket){
+    data.date = new Date().toISOString().replace("T", " ").replace("Z", "").substr(0,19);
+    data.isi_messages = 'is join to this chat.';
+    socket.broadcast.to(data.transaksi_konsul_id).emit('joined', 
+    JSON.parse(helper.BalikanHeader('true','Berhasil join to chatroom','',JSON.stringify(data))));
+}
+
+/**
  * Broadcast event message is typing to all client in same room
  * @param {*} data 
  * @param {*} socket 
@@ -127,7 +140,7 @@ function messageIsRead(data,socket){
     try {
         var sql = NOSQL('tr_chat_messages');
         sql.update({ messages_status_id: 3}).make(function(builder) {
-            builder.first();
+            builder.take(1);
             builder.where('messages_id', data.messages_id);
             builder.where('messages_status_id', '!=',3);
             builder.callback(function(err,response,count) {
@@ -143,6 +156,7 @@ module.exports = {
     BalikanHeader : function(stsres, stsdes, stsfal, datanya){
         return helper.BalikanHeader(stsres, stsdes, stsfal, datanya);
     },
+    joinRoom,
     validateConsult,
     loadMessages,
     insertMessages,
