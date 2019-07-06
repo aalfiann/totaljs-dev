@@ -25,15 +25,18 @@ var socketio = require('socket.io');
 var revalidator = require('revalidator');
 var wsconsult = require(F.path.definitions('wsconsult'));
 
+// Set true to print the console.log
+const wsdebug = true;
+
 F.on("load", function() {
     this.io = socketio.listen(this.server);
 
     this.io.on('connection',function(socket){
         
-        console.log('Client id: '+socket.id+' is connected');
+        if(wsdebug) console.log('Client id: '+socket.id+' is connected');
 
         socket.on('join', function(data) {
-            console.log(data.akun_id+' is joining chat room: ', data.transaksi_konsul_id);
+            if(wsdebug) console.log(data.akun_id+' is joining chat room: ', data.transaksi_konsul_id);
             socket.join(data.transaksi_konsul_id);
             // send emit to joined event
             wsconsult.joinRoom(data,socket);
@@ -59,9 +62,10 @@ F.on("load", function() {
                 sendData.messages_status_id=1;
                 // write logic to saving message to database with message status received in database
                 var resData = wsconsult.insertMessages(sendData);
-                console.log('sending ', sendData);
+                if(wsdebug) console.log('sending ', sendData);
                 socket.broadcast.to(data.transaksi_konsul_id).emit('received', JSON.parse(resData));
             } else {
+                if(wsdebug) console.log(JSON.stringify(validator.errors));
                 socket.emit('received',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
             }
         });
@@ -75,7 +79,7 @@ F.on("load", function() {
         });
 
         socket.on('disconnect', function (data) {
-            console.log('Client '+ socket.id +' is disconnected');
+            if(wsdebug) console.log('Client '+ socket.id +' is disconnected');
         });
 
     });
