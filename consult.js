@@ -37,18 +37,24 @@ F.on("load", function() {
         if(wsdebug) console.log('Client id: '+socket.id+' is connected');
 
         socket.on('join', function(data) {
-            if(wsdebug) console.log(data.akun_id+' is joining chat room: ', data.transaksi_konsul_id);
-            socket.join(data.transaksi_konsul_id);
-            // send emit to joined event
-            wsconsult.joinRoom(data,socket);
+            if(wsconsult.hasKey(data,['akun_id','transaksi_konsul_id'])){
+                if(wsdebug) console.log(data.akun_id+' is joining chat room: ', data.transaksi_konsul_id);
+                socket.join(data.transaksi_konsul_id);
+                // send emit to joined event
+                wsconsult.joinRoom(data,socket);
+            }
         });
 
         socket.on('loadHistory', function(data){
-            wsconsult.loadMessages(data.transaksi_konsul_id,socket);
+            if(wsconsult.hasKey(data,'transaksi_konsul_id')){
+                wsconsult.loadMessages(data.transaksi_konsul_id,socket);
+            }
         });
 
         socket.on('validateConsult', function(data){
-            wsconsult.validateConsult(data.transaksi_konsul_id,socket);
+            if(wsconsult.hasKey(data,'transaksi_konsul_id')){
+                wsconsult.validateConsult(data.transaksi_konsul_id,socket);
+            }
         });
 
         socket.on('message', function(data) {
@@ -81,11 +87,15 @@ F.on("load", function() {
         });
 
         socket.on('read', function(data) {
-            wsconsult.messageIsRead(data,socket);
+            if(wsconsult.hasKey(data,['transaksi_konsul_id','messages_id'])){
+                wsconsult.messageIsRead(data,socket);
+            }
         });
 
         socket.on('typing', function(data) {
-            wsconsult.messageIsTyping(data,socket);
+            if(wsconsult.hasKey(data,'transaksi_konsul_id')){
+                wsconsult.messageIsTyping(data,socket);
+            }
         });
 
         socket.on('disconnect', function (data) {

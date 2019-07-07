@@ -39,6 +39,17 @@ function message_schema(){
 }
 
 /**
+ * Determine in object has key
+ * @param {*} data 
+ * @param {string|array} name 
+ * @return {bool}
+ */
+function hasKey(data,name){
+    name = name instanceof Array ? name : [name];
+	return name.every(key => Object.keys(data).includes(key));
+}
+
+/**
  * Validate the consult id
  * @param {string} transaksi_konsul_id 
  * @param {*} socket 
@@ -174,5 +185,6 @@ module.exports = {
     messageIsTyping,
     messageIsRead,
     message_schema,
-    broadcastMessage
+    broadcastMessage,
+    hasKey
 }
