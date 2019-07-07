@@ -7,7 +7,7 @@
 const options = {};
 
 // options.ip = '127.0.0.1';
-options.port = parseInt(process.argv[2]);
+// options.port = parseInt(process.argv[2]);
 // options.config = { name: 'Total.js' };
 // options.sleep = 3000;
 // options.inspector = 9229;
@@ -20,6 +20,7 @@ require('total.js')
 //======================================
 // BELOW HERE IS TO RUN SOCKET SERVER   
 //======================================
+options.port = '7780';
 const uuidv4 = require('uuid/v4');
 var socketio = require('socket.io');
 var revalidator = require('revalidator');
