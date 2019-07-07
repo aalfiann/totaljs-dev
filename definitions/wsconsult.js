@@ -111,12 +111,12 @@ function insertMessages(data){
  * Broadcast to all client if new user has joined to the chat room
  * @param {*} data
  * @param {*} socket
- * @return {callback} emit to joined event 
+ * @return {callback} emit to join event 
  */
 function joinRoom(data,socket){
     data.date = new Date().toISOString().replace("T", " ").replace("Z", "").substr(0,19);
     data.isi_messages = 'is join to this chat.';
-    socket.broadcast.to(data.transaksi_konsul_id).emit('joined', 
+    socket.broadcast.to(data.transaksi_konsul_id).emit('join', 
     JSON.parse(helper.BalikanHeader('true','Berhasil join to chatroom','',JSON.stringify(data))));
 }
 
@@ -124,10 +124,10 @@ function joinRoom(data,socket){
  * Broadcast event message is typing to all client in same room
  * @param {*} data 
  * @param {*} socket 
- * @return {callback} emit to typed event
+ * @return {callback} emit to typing event
  */
 function messageIsTyping(data,socket){
-    socket.broadcast.to(data.transaksi_konsul_id).emit('typed', JSON.parse(helper.BalikanHeader('true','Sedang mengetik...','',JSON.stringify(data))));
+    socket.broadcast.to(data.transaksi_konsul_id).emit('typing', JSON.parse(helper.BalikanHeader('true','Sedang mengetik...','',JSON.stringify(data))));
 }
 
 /**

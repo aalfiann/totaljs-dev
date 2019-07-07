@@ -9,7 +9,7 @@
 	conversation_id = '@{model.consultroom}';
 
 	socket.emit('join', {akun_id:userid,transaksi_konsul_id:conversation_id});
-	socket.on('joined', function (data) {
+	socket.on('join', function (data) {
 		joinedMessage(data);
 	});
 
@@ -25,17 +25,17 @@
 		console.log(JSON.stringify(data));
 	});
 
-	socket.emit('reading',{transaksi_konsul_id:conversation_id,messages_id:'56d5ef8e-4d8f-47b3-b19e-15651839426b'});
+	socket.emit('read',{transaksi_konsul_id:conversation_id,messages_id:'56d5ef8e-4d8f-47b3-b19e-15651839426b'});
 
 	socket.on('read',function(data){
 		console.log(JSON.stringify(data));
 	});
 
-	socket.on('typed',function(data){
+	socket.on('typing',function(data){
 		console.log(JSON.stringify(data));
 	});
 
-	socket.on('received',function(data){
+	socket.on('message',function(data){
 		receivedMessage(data);
 	});
 

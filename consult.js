@@ -64,14 +64,14 @@ F.on("load", function() {
                 // write logic to saving message to database with message status received in database
                 var resData = wsconsult.insertMessages(sendData);
                 if(wsdebug) console.log('sending ', sendData);
-                socket.broadcast.to(data.transaksi_konsul_id).emit('received', JSON.parse(resData));
+                socket.broadcast.to(data.transaksi_konsul_id).emit('message', JSON.parse(resData));
             } else {
                 if(wsdebug) console.log(JSON.stringify(validator.errors));
-                socket.emit('received',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
+                socket.emit('message',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
             }
         });
 
-        socket.on('reading', function(data) {
+        socket.on('read', function(data) {
             wsconsult.messageIsRead(data,socket);
         });
 
