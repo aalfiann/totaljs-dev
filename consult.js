@@ -69,7 +69,7 @@ F.on("load", function() {
                 var resData = wsconsult.insertMessages(sendData); 
                 if(wsdebug) console.log('sending ', sendData);
                 socket.broadcast.to(data.transaksi_konsul_id).emit('message', JSON.parse(resData));
-                socket.broadcast.emit('newmessage', JSON.parse(helper.BalikanHeader('true','Ada pesan baru','',JSON.stringify(sendData))));
+                socket.broadcast.emit('newmessage', JSON.parse(wsconsult.BalikanHeader('true','Ada pesan baru','',JSON.stringify(sendData))));
             } else {
                 if(wsdebug) console.log(JSON.stringify(validator.errors));
                 socket.emit('message',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));

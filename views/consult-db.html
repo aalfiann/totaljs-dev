@@ -8,42 +8,45 @@
 	userid = '@{model.userid}';
 	conversation_id = '@{model.consultroom}';
 
-	socket.on('newmessage', function (data) {
-		console.log(JSON.stringify(data));
-	});
-
-	socket.emit('join', {akun_id:userid,transaksi_konsul_id:conversation_id});
-	socket.on('join', function (data) {
-		joinedMessage(data);
-	});
-
-	socket.emit('loadHistory', {transaksi_konsul_id:conversation_id});
-	socket.on('loadHistory', function (data) {
-		console.log(JSON.stringify(data));
-	});
-
 	socket.on('connect', function (data) {
 		console.log('connect to server is successful');
 	});
 
-	socket.emit('validateConsult', {transaksi_konsul_id:conversation_id});
-	socket.on('validateConsult', function(data) {
+	socket.on('newmessage', function (data) {
 		console.log(JSON.stringify(data));
 	});
 
-	socket.emit('read',{transaksi_konsul_id:conversation_id,messages_id:'56d5ef8e-4d8f-47b3-b19e-15651839426b'});
+	if(conversation_id.length > 0){
 
-	socket.on('read',function(data){
-		console.log(JSON.stringify(data));
-	});
+		socket.emit('join', {akun_id:userid,transaksi_konsul_id:conversation_id});
+		socket.on('join', function (data) {
+			joinedMessage(data);
+		});
 
-	socket.on('typing',function(data){
-		console.log(JSON.stringify(data));
-	});
+		socket.emit('loadHistory', {transaksi_konsul_id:conversation_id});
+		socket.on('loadHistory', function (data) {
+			console.log(JSON.stringify(data));
+		});
 
-	socket.on('message',function(data){
-		receivedMessage(data);
-	});
+		socket.emit('validateConsult', {transaksi_konsul_id:conversation_id});
+		socket.on('validateConsult', function(data) {
+			console.log(JSON.stringify(data));
+		});
+
+		socket.emit('read',{transaksi_konsul_id:conversation_id,messages_id:'56d5ef8e-4d8f-47b3-b19e-15651839426b'});
+		socket.on('read',function(data){
+			console.log(JSON.stringify(data));
+		});
+
+		socket.on('typing',function(data){
+			console.log(JSON.stringify(data));
+		});
+
+		socket.on('message',function(data){
+			receivedMessage(data);
+		});
+
+	}	
 
 	socket.on('disconnect',function(data){
 		console.log('connection disconnected!');
