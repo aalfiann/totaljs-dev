@@ -8,6 +8,10 @@
 	userid = '@{model.userid}';
 	conversation_id = '@{model.consultroom}';
 
+	socket.on('newmessage', function (data) {
+		console.log(JSON.stringify(data));
+	});
+
 	socket.emit('join', {akun_id:userid,transaksi_konsul_id:conversation_id});
 	socket.on('join', function (data) {
 		joinedMessage(data);

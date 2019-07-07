@@ -66,13 +66,18 @@ F.on("load", function() {
                 sendData.messages_date = new Date().toISOString().replace("T", " ").replace("Z", "").substr(0,19);
                 sendData.messages_status_id=1;
                 // write logic to saving message to database with message status received in database
-                var resData = wsconsult.insertMessages(sendData);
+                var resData = wsconsult.insertMessages(sendData); 
                 if(wsdebug) console.log('sending ', sendData);
                 socket.broadcast.to(data.transaksi_konsul_id).emit('message', JSON.parse(resData));
+                socket.broadcast.emit('newmessage', JSON.parse(helper.BalikanHeader('true','Ada pesan baru','',JSON.stringify(sendData))));
             } else {
                 if(wsdebug) console.log(JSON.stringify(validator.errors));
                 socket.emit('message',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
             }
+        });
+
+        socket.on('broadcast', function(data) {
+            wsconsult.broadcastMessage(data,socket);
         });
 
         socket.on('read', function(data) {

@@ -122,6 +122,16 @@ function joinRoom(data,socket){
 }
 
 /**
+ * Broadcast Message to all client except sender
+ * @param {*} data 
+ * @param {*} socket 
+ * @return {callback} emit to broadcast event
+ */
+function broadcastMessage(data,socket){
+    socket.broadcast.emit('broadcast', JSON.parse(helper.BalikanHeader('true','Ada pesan broadcast baru','',JSON.stringify(data))));
+}
+
+/**
  * Broadcast event message is typing to all client in same room
  * @param {*} data 
  * @param {*} socket 
@@ -163,5 +173,6 @@ module.exports = {
     insertMessages,
     messageIsTyping,
     messageIsRead,
-    message_schema
+    message_schema,
+    broadcastMessage
 }
