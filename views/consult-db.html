@@ -13,6 +13,7 @@
 		joinedMessage(data);
 	});
 
+	socket.emit('loadHistory', {transaksi_konsul_id:conversation_id});
 	socket.on('loadHistory', function (data) {
 		console.log(JSON.stringify(data));
 	});
@@ -21,6 +22,7 @@
 		console.log('connect to server is successful');
 	});
 
+	socket.emit('validateConsult', {transaksi_konsul_id:conversation_id});
 	socket.on('validateConsult', function(data) {
 		console.log(JSON.stringify(data));
 	});

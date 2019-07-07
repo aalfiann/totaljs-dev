@@ -58,13 +58,14 @@ function validateConsult(transaksi_konsul_id,socket){
                     socket.emit('validateConsult',JSON.parse(helper.BalikanHeader('true','Consult masih aktif','',JSON.stringify(response))));
                 } else {
                     socket.emit('validateConsult',JSON.parse(helper.BalikanHeader('true','Consult telah expired','expired',JSON.stringify(response))));
-                    socket.disconnect();
+                    socket.leave(transaksi_konsul_id);
+
                 }
             });
         });
     } catch (err) {
         socket.emit('validateConsult',JSON.parse(helper.BalikanHeader("false","Ada kesalahan... " + err,"error","")));
-        socket.disconnect();
+        socket.leave(transaksi_konsul_id);
     }
 }
 

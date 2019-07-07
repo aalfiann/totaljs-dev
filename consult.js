@@ -41,9 +41,13 @@ F.on("load", function() {
             socket.join(data.transaksi_konsul_id);
             // send emit to joined event
             wsconsult.joinRoom(data,socket);
-            // send emit to load history event
+        });
+
+        socket.on('loadHistory', function(data){
             wsconsult.loadMessages(data.transaksi_konsul_id,socket);
-            // validate consult if expired then disconnect
+        });
+
+        socket.on('validateConsult', function(data){
             wsconsult.validateConsult(data.transaksi_konsul_id,socket);
         });
 
