@@ -76,6 +76,10 @@ F.on("load", function() {
                 sendData.messages_status_id=1;
                 // write logic to saving message to database with message status received in database
                 var resData = wsconsult.insertMessages(sendData); 
+                if(wsconsult.hasKey(data,['nickname'])){
+                    resData.nickname = data.nickname;
+                    sendData.nickname = data.nickname;
+                }
                 if(wsdebug) console.log('sending ', sendData);
                 socket.broadcast.to(data.transaksi_konsul_id).emit('message', JSON.parse(resData));
                 socket.broadcast.emit('newmessage', JSON.parse(wsconsult.BalikanHeader('true','Ada pesan baru','',JSON.stringify(sendData))));
@@ -116,4 +120,4 @@ F.on("load", function() {
     });
 });
 
-F.http('consult',options);
+F.http('debug',options);
