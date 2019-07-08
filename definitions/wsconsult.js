@@ -9,34 +9,32 @@ const helper = require(F.path.definitions('helper'));
  * Schema Message for validate the socket request 
  * @return {object}
  */
-function message_schema(){
-    return {
-        type: 'object',
-        required: true,
-        properties: {
-            transaksi_konsul_id: {
-                type: 'string',
-                required: true
-            },
-            akun_id: {
-                type: 'string',
-                required: true
-            },
-            akun_type: {
-                type: 'number',
-                required: true
-            },
-            message_type_id: {
-                type: 'number',
-                required: true
-            },
-            isi_messages: {
-                type: 'string',
-                required: true
-            }
+const message_schema = {
+    type: 'object',
+    required: true,
+    properties: {
+        transaksi_konsul_id: {
+            type: 'string',
+            required: true
+        },
+        akun_id: {
+            type: 'string',
+            required: true
+        },
+        akun_type: {
+            type: 'number',
+            required: true
+        },
+        message_type_id: {
+            type: 'number',
+            required: true
+        },
+        isi_messages: {
+            type: 'string',
+            required: true
         }
-    };
-}
+    }
+};
 
 /**
  * Schema Join for validate the socket request 
