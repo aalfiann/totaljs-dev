@@ -97,6 +97,20 @@ const typing_schema = {
 };
 
 /**
+ * Schema Load History for validate the socket request 
+ */
+const loadhistory_schema = {
+    type: 'object',
+    required: true,
+    properties: {
+        transaksi_konsul_id: {
+            type: 'string',
+            required: true
+        }
+    }
+};
+
+/**
  * Determine in object has key
  * @param {*} data 
  * @param {string|array} name 
@@ -251,6 +265,7 @@ module.exports = {
     join_schema,
     read_schema,
     typing_schema,
+    loadhistory_schema,
     broadcastMessage,
     hasKey
 }

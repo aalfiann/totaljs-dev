@@ -51,8 +51,12 @@ F.on("load", function() {
         });
 
         socket.on('loadHistory', function(data){
-            if(wsconsult.hasKey(data,'transaksi_konsul_id')){
+            var validator = revalidator.validate(data,wsconsult.loadhistory_schema);
+            if(validator.valid){
                 wsconsult.loadMessages(data.transaksi_konsul_id,socket);
+            } else {
+                if(wsdebug) console.log(JSON.stringify(validator.errors));
+                socket.emit('loadHistory',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
             }
         });
 
