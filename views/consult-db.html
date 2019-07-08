@@ -18,7 +18,7 @@
 
 	if(conversation_id.length > 0){
 
-		socket.emit('join', {akun_id:userid,transaksi_konsul_id:conversation_id});
+		socket.emit('join', {akun_id:userid,akun_type:usertype,transaksi_konsul_id:conversation_id});
 		socket.on('join', function (data) {
 			joinedMessage(data);
 		});
@@ -28,7 +28,6 @@
 			console.log(JSON.stringify(data));
 		});
 
-		socket.emit('validateConsult', {transaksi_konsul_id:conversation_id});
 		socket.on('validateConsult', function(data) {
 			console.log(JSON.stringify(data));
 		});

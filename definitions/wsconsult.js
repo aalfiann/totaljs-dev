@@ -39,6 +39,64 @@ function message_schema(){
 }
 
 /**
+ * Schema Join for validate the socket request 
+ */
+const join_schema = {
+    type: 'object',
+    required: true,
+    properties: {
+        transaksi_konsul_id: {
+            type: 'string',
+            required: true
+        },
+        akun_id: {
+            type: 'string',
+            required: true
+        },
+        akun_type: {
+            type: 'number',
+            required: true
+        }
+    }
+};
+
+/**
+ * Schema Read for validate the socket request 
+ */
+const read_schema = {
+    type: 'object',
+    required: true,
+    properties: {
+        transaksi_konsul_id: {
+            type: 'string',
+            required: true
+        },
+        messages_id: {
+            type: 'string',
+            required: true
+        }
+    }
+};
+
+/**
+ * Schema Typing for validate the socket request 
+ */
+const typing_schema = {
+    type: 'object',
+    required: true,
+    properties: {
+        transaksi_konsul_id: {
+            type: 'string',
+            required: true
+        },
+        akun_id: {
+            type: 'string',
+            required: true
+        }
+    }
+};
+
+/**
  * Determine in object has key
  * @param {*} data 
  * @param {string|array} name 
@@ -55,7 +113,7 @@ function hasKey(data,name){
  * @param {*} socket 
  * @return {callback} emit to validateConsult event or socket disconnect
  */
-function validateConsult(transaksi_konsul_id,socket){
+function validateConsult(transaksi_konsul_id,akun_id,akun_type,socket){
     try {
         var sql = NOSQL('tr_transaksi_konsul');
         var tanggal = new Date().toISOString().replace("T", " ").replace("Z", "").substr(0,19);
@@ -64,6 +122,11 @@ function validateConsult(transaksi_konsul_id,socket){
             builder.where('tanggal_awal_chat','<=',tanggal);
             builder.where('tanggal_akhir_chat','>=',tanggal);
             builder.where('status_active_id',1);
+            if(akun_type == 1){
+                builder.where('user_id',akun_id);
+            } else if (akun_type == 2) {
+                builder.where('mitra_id',akun_id);
+            }
             builder.callback(function(err, response,count) {
                 if(count){
                     socket.emit('validateConsult',JSON.parse(helper.BalikanHeader('true','Consult masih aktif','',JSON.stringify(response))));
@@ -185,6 +248,9 @@ module.exports = {
     messageIsTyping,
     messageIsRead,
     message_schema,
+    join_schema,
+    read_schema,
+    typing_schema,
     broadcastMessage,
     hasKey
 }

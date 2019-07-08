@@ -37,23 +37,22 @@ F.on("load", function() {
         if(wsdebug) console.log('Client id: '+socket.id+' is connected');
 
         socket.on('join', function(data) {
-            if(wsconsult.hasKey(data,['akun_id','transaksi_konsul_id'])){
+            var validator = revalidator.validate(data,wsconsult.join_schema);
+            if(validator.valid){
                 if(wsdebug) console.log(data.akun_id+' is joining chat room: ', data.transaksi_konsul_id);
                 socket.join(data.transaksi_konsul_id);
                 // send emit to joined event
                 wsconsult.joinRoom(data,socket);
+                wsconsult.validateConsult(data.transaksi_konsul_id,data.akun_id,data.akun_type,socket);
+            } else {
+                if(wsdebug) console.log(JSON.stringify(validator.errors));
+                socket.emit('join',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
             }
         });
 
         socket.on('loadHistory', function(data){
             if(wsconsult.hasKey(data,'transaksi_konsul_id')){
                 wsconsult.loadMessages(data.transaksi_konsul_id,socket);
-            }
-        });
-
-        socket.on('validateConsult', function(data){
-            if(wsconsult.hasKey(data,'transaksi_konsul_id')){
-                wsconsult.validateConsult(data.transaksi_konsul_id,socket);
             }
         });
 
@@ -87,14 +86,22 @@ F.on("load", function() {
         });
 
         socket.on('read', function(data) {
-            if(wsconsult.hasKey(data,['transaksi_konsul_id','messages_id'])){
+            var validator = revalidator.validate(data,wsconsult.read_schema);
+            if(validator.valid){
                 wsconsult.messageIsRead(data,socket);
+            } else {
+                if(wsdebug) console.log(JSON.stringify(validator.errors));
+                socket.emit('read',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
             }
         });
 
         socket.on('typing', function(data) {
-            if(wsconsult.hasKey(data,'transaksi_konsul_id')){
+            var validator = revalidator.validate(data,wsconsult.typing_schema);
+            if(validator.valid){
                 wsconsult.messageIsTyping(data,socket);
+            } else {
+                if(wsdebug) console.log(JSON.stringify(validator.errors));
+                socket.emit('typing',JSON.parse(wsconsult.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
             }
         });
 
