@@ -1,3 +1,6 @@
+var helper = require(F.path.definitions('helper'));
+var DataTransform = require("node-json-transform").DataTransform;
+
 NEWSCHEMA('Profile').make(function(schema) {
 
 	schema.define('id', 'string', true);
@@ -77,8 +80,34 @@ NEWSCHEMA('Profile').make(function(schema) {
 				builder.end();
 			}
 			
-			builder.fields('id', 'firstname', 'lastname', 'about', 'address', 'datecreated');
-			builder.callback($.callback);
+			builder.callback(function (err,response,count){
+				var data = {
+					json:response
+				};
+
+				var map = {
+					list : 'json',
+					item: {
+						id: "id.id",
+						datecreated: "id.datecreated",
+						firstname: "id.firstname",
+						lastname: "id.lastname",
+						about: "about",
+						address: "address"
+					},
+					operate: [
+						{
+							run: function(val) { 
+								return new Date(val).toISOString().replace("T", " ").replace("Z", "").substr(0,19)
+							},
+							on: "datecreated"
+						}
+					]
+				};
+				var dataTransform = DataTransform(data, map);
+				var result = dataTransform.transform();
+				$.callback(JSON.parse(helper.BalikanHeaderSudahArray('true','Data found','',JSON.stringify(result))));
+			});
 		});
 
 	});

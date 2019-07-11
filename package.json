@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"main": "debug.js",
 	"dependencies": {
+		"node-json-transform": "^1.0.19",
 		"revalidator": "^0.3.1",
 		"socket.io": "latest",
 		"sync-loop": "^0.1.1",

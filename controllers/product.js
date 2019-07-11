@@ -15,7 +15,7 @@ function product_query() {
 
 	options.search = self.query.search;
 
-	self.$query(options, self.callback());
+	self.$query(options, self.callback());	
 }
 
 function product_read(id) {
