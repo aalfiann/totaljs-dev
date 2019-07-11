@@ -58,3 +58,29 @@ function BikinLog (path, tulislog){
     }
     out.end();
 }
+
+exports.sendFCM = function (to, data, notifications, callback) {
+	var self = this;
+	var FCM_AUTHORIZATION_KEY = ''; //Change with your FCM Authorization Key if any
+	var FCM = require(F.path.definitions('fcm'));
+	var fcm = new FCM(FCM_AUTHORIZATION_KEY);
+	fcm.registration_ids(to).data(data);
+	if(notifications) {
+		fcm.notifications(notifications);
+	}
+	fcm.send(function (response) {
+		return callback(JSON.parse(self.BalikanHeader('true','Request terkirim','',JSON.stringify(response))));
+	});
+}
+
+exports.testFCM = function (to, data, notifications) {
+	var FCM = require(F.path.definitions('fcm'));
+	var fcm = new FCM('abcdefg');
+	if(notifications){
+		fcm.notifications(notifications);
+	}
+	fcm.add('to','aziz');
+	//fcm.remove('to');
+	//return fcm.getBody();
+	return JSON.parse(this.BalikanHeader('true','Request terkirim','',JSON.stringify(fcm.getBody())));
+}

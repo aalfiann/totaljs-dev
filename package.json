@@ -6,7 +6,9 @@
 	"dependencies": {
 		"revalidator": "^0.3.1",
 		"socket.io": "latest",
+		"sync-loop": "^0.1.1",
 		"total.js": "latest",
+		"unirest": "^0.6.0",
 		"uuid": "^3.3.2"
 	},
 	"scripts": {
