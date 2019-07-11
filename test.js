@@ -18,7 +18,8 @@ const options = {};
 require('total.js')
 
 var helper = require(F.path.definitions('helper'));
-var to = ["f1AXw48goHw:APA91bEcjBDKFQw6goEkAwGB5DtoMfCAEbIEuRE-wL7Ce6GtqXHuqGqAAaNScVMKkASHvCzdkW5P3ykHcfaDxbsBNH0nL0HHGbTKigi0IoD3X7HOor7CiemsZGi8yXD2vDRiboaQJPpz","abcbc"];
+//var to = ["f1AXw48goHw:APA91bEcjBDKFQw6goEkAwGB5DtoMfCAEbIEuRE-wL7Ce6GtqXHuqGqAAaNScVMKkASHvCzdkW5P3ykHcfaDxbsBNH0nL0HHGbTKigi0IoD3X7HOor7CiemsZGi8yXD2vDRiboaQJPpz","abcbc"];
+var to = ["abcbc"];
 var data = {
           "body" : "Body of Your Notification in Data",
           "title": "Title of Your Notification in Title",
@@ -26,10 +27,10 @@ var data = {
           "key_2" : "Value for key_2"
 }
 
-// helper.sendFCM(to,data,'',function(response){
-//     console.log(response);
-// });
+helper.sendFCM(to,data,'',function(response){
+    console.log(JSON.stringify(response));
+});
 
-console.log(helper.testFCM(to,data));
+// console.log(helper.testFCM(to,data));
 
 F.http('debug');

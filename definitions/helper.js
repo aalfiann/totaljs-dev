@@ -69,7 +69,11 @@ exports.sendFCM = function (to, data, notifications, callback) {
 		fcm.notifications(notifications);
 	}
 	fcm.send(function (response) {
-		return callback(JSON.parse(self.BalikanHeader('true','Request terkirim','',JSON.stringify(response))));
+		if(response.statusCode < 400){
+			return callback(JSON.parse(self.BalikanHeader('true','Request berhasil','',JSON.stringify(response.body))));
+		} else {
+			return callback(JSON.parse(self.BalikanHeader('false','Request gagal. HTTP status: '+response.statusCode,'',JSON.stringify(response.body))));
+		}
 	});
 }
 

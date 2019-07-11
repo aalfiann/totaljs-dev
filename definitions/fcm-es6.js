@@ -123,7 +123,7 @@ class FCM {
         })
         .send(this.body)
         .end(function (response) {
-          return callback(response.body);
+          return callback(response);
         });
     }
 
