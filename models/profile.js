@@ -63,52 +63,54 @@ NEWSCHEMA('Profile').make(function(schema) {
 
 	schema.setQuery(function($) {
 
-		var profile = NOSQL('profile');
+		var users = NOSQL('users');
 		var options = $.options;
 
 		// Reads the profile
-		profile.find()
-			.join('id', NOSQL('users'))
-			.on('id', 'id')
-			.first()
+		users.find()
 			.make(function(builder) {
-
-			if (options.search) {
-				builder.or();
-				builder.search('firstname', options.search);
-				builder.search('lastname', options.search);
-				builder.end();
-			}
+				var profile = builder.join('id', NOSQL('profile')).on('id', 'id');
+				profile.first();
+				if (options.search) {
+					builder.or();
+					builder.search('firstname', options.search);
+					builder.search('lastname', options.search);
+					builder.end();
+				}
 			
-			builder.callback(function (err,response,count){
-				var data = {
-					json:response
-				};
+				builder.callback(function (err,response,count){
+					if(count>0){
+						var data = {
+							json:response
+						};
 
-				var map = {
-					list : 'json',
-					item: {
-						id: "id.id",
-						datecreated: "id.datecreated",
-						firstname: "id.firstname",
-						lastname: "id.lastname",
-						about: "about",
-						address: "address"
-					},
-					operate: [
-						{
-							run: function(val) { 
-								return new Date(val).toISOString().replace("T", " ").replace("Z", "").substr(0,19)
+						var map = {
+							list : 'json',
+							item: {
+								id: "id.id",
+								datecreated: "datecreated",
+								firstname: "firstname",
+								lastname: "lastname",
+								about: "id.about",
+								address: "id.address"
 							},
-							on: "datecreated"
-						}
-					]
-				};
-				var dataTransform = DataTransform(data, map);
-				var result = dataTransform.transform();
-				$.callback(JSON.parse(helper.BalikanHeaderSudahArray('true','Data found','',JSON.stringify(result))));
+							operate: [
+								{
+									run: function(val) { 
+										return new Date(val).toISOString().replace("T", " ").replace("Z", "").substr(0,19)
+									},
+									on: "datecreated"
+								}
+							]
+						};
+						var dataTransform = DataTransform(data, map);
+						var result = dataTransform.transform();
+						$.callback(JSON.parse(helper.BalikanHeaderSudahArray('true','Data found','',JSON.stringify(result))));
+					} else {
+						$.callback(JSON.parse(helper.BalikanHeader('true','Data not found','','')));
+					}
+				});
 			});
-		});
 
 	});
 
