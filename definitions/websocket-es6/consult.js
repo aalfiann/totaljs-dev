@@ -168,6 +168,29 @@ const helper = require(F.path.definitions('helper'));
             }
         }
 
+        /**
+         * Broadcast event message is deleted to all client in same room
+         * @param {*} data 
+         * @param {*} socket 
+         * @return {callback} emit to delete event
+         */
+        messageIsDeleted(data,socket){
+            var self = this;
+            try {
+                var sql = NOSQL('tr_chat_messages');
+                sql.update({ status_active_id: 2}).make(function(builder) {
+                    builder.take(1);
+                    builder.where('messages_id', data.messages_id);
+                    builder.where('status_active_id', '!=',2);
+                    builder.callback(function(err,response,count) {
+                        socket.broadcast.to(data.transaksi_konsul_id).emit('delete', JSON.parse(self.BalikanHeader('true','Pesan ini telah dihapus','',JSON.stringify(data))));
+                    });
+                });
+            } catch (err) {
+                socket.broadcast.to(data.transaksi_konsul_id).emit('delete', JSON.parse(self.BalikanHeader("false","Ada kesalahan... " + err,"error","")));
+            }
+        }
+
     }
 
     module.exports = Consult;

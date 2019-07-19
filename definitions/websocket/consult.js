@@ -147,6 +147,28 @@ function messageIsRead(data,socket){
     }
 }
 
+/**
+ * Broadcast event message is deleted to all client in same room
+ * @param {*} data 
+ * @param {*} socket 
+ * @return {callback} emit to delete event
+ */
+function messageIsDeleted(data,socket){
+    try {
+        var sql = NOSQL('tr_chat_messages');
+        sql.update({ status_active_id: 2}).make(function(builder) {
+            builder.take(1);
+            builder.where('messages_id', data.messages_id);
+            builder.where('status_active_id', '!=',2);
+            builder.callback(function(err,response,count) {
+                socket.broadcast.to(data.transaksi_konsul_id).emit('delete', JSON.parse(helper.BalikanHeader('true','Pesan ini telah dihapus','',JSON.stringify(data))));
+            });
+        });
+    } catch (err) {
+        socket.broadcast.to(data.transaksi_konsul_id).emit('delete', JSON.parse(helper.BalikanHeader("false","Ada kesalahan... " + err,"error","")));
+    }
+}
+
 module.exports = {
     BalikanHeader : function(stsres, stsdes, stsfal, datanya){
         return helper.BalikanHeader(stsres, stsdes, stsfal, datanya);
@@ -157,9 +179,11 @@ module.exports = {
     insertMessages,
     messageIsTyping,
     messageIsRead,
+    messageIsDeleted,
     message_schema:schema.message_schema,
     join_schema:schema.join_schema,
     read_schema:schema.read_schema,
+    delete_schema:schema.delete_schema,
     typing_schema:schema.typing_schema,
     loadhistory_schema:schema.loadhistory_schema,
     broadcastMessage,

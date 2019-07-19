@@ -70,6 +70,11 @@ const read_schema = {
 };
 
 /**
+ * Schema Delete for validate the socket request 
+ */
+const delete_schema = read_schema;
+
+/**
  * Schema Typing for validate the socket request 
  */
 const typing_schema = {
@@ -105,6 +110,7 @@ module.exports = {
     message_schema,
     join_schema,
     read_schema,
+    delete_schema,
     typing_schema,
     loadhistory_schema
 }

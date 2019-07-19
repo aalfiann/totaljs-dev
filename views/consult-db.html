@@ -38,6 +38,11 @@
 			console.log(JSON.stringify(data));
 		});
 
+		socket.emit('delete',{transaksi_konsul_id:conversation_id,messages_id:'ad42b9a6-7c23-46b0-a1e1-d13f4f6a1e62'});
+		socket.on('delete',function(data){
+			console.log(JSON.stringify(data));
+		});
+
 		socket.on('typing',function(data){
 			console.log(JSON.stringify(data));
 		});

@@ -83,6 +83,13 @@
         }
 
         /**
+         * Schema Delete for validate the socket request 
+         */
+        delete_schema() {
+            return this.read_schema();
+        }
+
+        /**
          * Schema Typing for validate the socket request 
          */
         typing_schema() {

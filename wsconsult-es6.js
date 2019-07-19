@@ -108,6 +108,16 @@ F.on("load", function() {
             }
         });
 
+        socket.on('delete', function(data) {
+            var validator = revalidator.validate(data,ws.delete_schema());
+            if(validator.valid){
+                ws.messageIsDeleted(data,socket);
+            } else {
+                if(wsdebug) console.log(JSON.stringify(validator.errors));
+                socket.emit('delete',JSON.parse(ws.BalikanHeader("false","Ada kesalahan... "+ JSON.stringify(JSON.stringify(validator.errors)).substr(1).slice(0, -1),"error","")));
+            }
+        });
+
         socket.on('typing', function(data) {
             var validator = revalidator.validate(data,ws.typing_schema());
             if(validator.valid){
