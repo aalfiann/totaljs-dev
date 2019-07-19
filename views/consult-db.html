@@ -33,12 +33,12 @@
 			console.log(JSON.stringify(data));
 		});
 
-		socket.emit('read',{transaksi_konsul_id:conversation_id,messages_id:'56d5ef8e-4d8f-47b3-b19e-15651839426b'});
+		socket.emit('read',{transaksi_konsul_id:conversation_id,messages_id:'ea4134ae-4b2b-48cb-a8f7-2d04d3e9a7c6'});
 		socket.on('read',function(data){
 			console.log(JSON.stringify(data));
 		});
 
-		socket.emit('delete',{akun_id:userid,transaksi_konsul_id:conversation_id,messages_id:'720ffdf8-47a9-4c4d-b673-0b450f3b813c'});
+		socket.emit('delete',{akun_id:userid,transaksi_konsul_id:conversation_id,messages_id:'0d1ca704-6ad9-496f-8df6-3e9204a0fe63'});
 		socket.on('delete',function(data){
 			console.log(JSON.stringify(data));
 		});
