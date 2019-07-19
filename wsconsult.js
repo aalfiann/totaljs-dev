@@ -86,6 +86,10 @@ F.on("load", function() {
                     if(wsdebug) console.log('Sending ', sendData);
                     socket.broadcast.to(data.transaksi_konsul_id).emit('message', JSON.parse(resData));
                     socket.broadcast.emit('newmessage', JSON.parse(wsconsult.BalikanHeader('true','Ada pesan baru','',JSON.stringify(sendData))));
+                    if(wsconsult.hasKey(data,['element_id'])){
+                        sendData.element_id = data.element_id;
+                    }
+                    socket.emit('delivered', JSON.parse(wsconsult.BalikanHeader('true','Pesan Anda berhasil terkirim','',JSON.stringify(sendData))));
                 } else {
                     if(wsdebug) console.log(data.akun_id+': tidak dapat mengirim chat karena room telah nonaktif');
                 }

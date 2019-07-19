@@ -38,8 +38,12 @@
 			console.log(JSON.stringify(data));
 		});
 
-		socket.emit('delete',{akun_id:userid,transaksi_konsul_id:conversation_id,messages_id:'fd2cf602-f5fe-49ed-91f0-059cf235a7b5'});
+		socket.emit('delete',{akun_id:userid,transaksi_konsul_id:conversation_id,messages_id:'720ffdf8-47a9-4c4d-b673-0b450f3b813c'});
 		socket.on('delete',function(data){
+			console.log(JSON.stringify(data));
+		});
+
+		socket.on('delivered',function(data){
 			console.log(JSON.stringify(data));
 		});
 
