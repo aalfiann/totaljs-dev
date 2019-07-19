@@ -63,6 +63,7 @@ function loadMessages(transaksi_konsul_id,socket){
         var sql = NOSQL('tr_chat_messages');
         sql.find().make(function(builder) {
             builder.where('transaksi_konsul_id', transaksi_konsul_id);
+            builder.where('status_active_id',1);
             builder.callback(function(err, response, count) {
                 if(count>0){
                     socket.emit('loadHistory',JSON.parse(helper.BalikanHeader('true','History chat ditemukan','',JSON.stringify(response))));

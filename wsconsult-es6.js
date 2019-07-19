@@ -73,6 +73,8 @@ F.on("load", function() {
                 sendData.messages_id = uuidv4();
                 sendData.messages_date = new Date().toISOString().replace("T", " ").replace("Z", "").substr(0,19);
                 sendData.messages_status_id=1;
+                sendData.status_active_id=1;
+                sendData.messages_date_modified='';
                 // write logic to saving message to database with message status received in database
                 if(wsconsult.hasKey(socket.rooms,[data.transaksi_konsul_id])){
                     var resData = ws.insertMessages(sendData); 
