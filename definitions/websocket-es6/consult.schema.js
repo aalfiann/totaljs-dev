@@ -86,7 +86,24 @@
          * Schema Delete for validate the socket request 
          */
         delete_schema() {
-            return this.read_schema();
+            return {
+                type: 'object',
+                required: true,
+                properties: {
+                    transaksi_konsul_id: {
+                        type: 'string',
+                        required: true
+                    },
+                    messages_id: {
+                        type: 'string',
+                        required: true
+                    },
+                    akun_id: {
+                        type: 'string',
+                        required: true
+                    }
+                }
+            };
         }
 
         /**

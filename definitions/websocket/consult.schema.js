@@ -72,7 +72,24 @@ const read_schema = {
 /**
  * Schema Delete for validate the socket request 
  */
-const delete_schema = read_schema;
+const delete_schema = {
+    type: 'object',
+    required: true,
+    properties: {
+        transaksi_konsul_id: {
+            type: 'string',
+            required: true
+        },
+        messages_id: {
+            type: 'string',
+            required: true
+        },
+        akun_id: {
+            type: 'string',
+            required: true
+        }
+    }
+};
 
 /**
  * Schema Typing for validate the socket request 

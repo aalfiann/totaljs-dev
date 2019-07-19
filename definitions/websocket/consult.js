@@ -158,10 +158,15 @@ function messageIsDeleted(data,socket){
         var sql = NOSQL('tr_chat_messages');
         sql.update({ status_active_id: 2}).make(function(builder) {
             builder.take(1);
+            builder.where('akun_id', data.akun_id);
             builder.where('messages_id', data.messages_id);
             builder.where('status_active_id', '!=',2);
             builder.callback(function(err,response,count) {
-                socket.broadcast.to(data.transaksi_konsul_id).emit('delete', JSON.parse(helper.BalikanHeader('true','Pesan ini telah dihapus','',JSON.stringify(data))));
+                if(count){
+                    socket.broadcast.to(data.transaksi_konsul_id).emit('delete', JSON.parse(helper.BalikanHeader('true','Pesan ini telah dihapus','',JSON.stringify(data))));
+                } else {
+                    socket.emit('delete', JSON.parse(helper.BalikanHeader('false','Anda hanya dapat menghapus pesan anda sendiri.','error','')));
+                }
             });
         });
     } catch (err) {
