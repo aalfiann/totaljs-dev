@@ -34,19 +34,29 @@ require('total.js')
 // console.log(helper.testFCM(to,data));
 
 F.on("load", function() {
-    var users = NOSQL('users');
-    var search = 'admin';
+    // var users = NOSQL('users');
+    //var search = 'admin';
 
 	// Reads the profile
-	users.find()
-		.make(function(builder) {
-			var profile = builder.join('id', NOSQL('profile')).on('id', 'id');
-            builder.contains('id');
-            profile.first();
-            profile.search('about', search);
-            builder.callback(function (err,response,count){
-				console.log(JSON.stringify(response));
-			});
-		});
+	// users.find()
+	// 	.make(function(builder) {
+	// 		var profile = builder.join('id', NOSQL('profile')).on('id', 'id');
+    //         builder.contains('id');
+    //         profile.first();
+    //         profile.search('about', search);
+    //         builder.callback(function (err,response,count){
+	// 			console.log(JSON.stringify(response));
+	// 		});
+    // 	});
+    
+    
+    // var users = NOSQL('users');
+    // for(var i=0;i<10;i++){
+    //     // add count
+    //     users.counter.hit('19070212570002dnd0',1);
+    // }
+    // users.counter.count(function(err,response){
+    //     console.log(response);
+    // });
 });
-F.http('debug');
+ F.http('debug');
