@@ -28,9 +28,6 @@ var wsconsult = require(F.path.definitions('websocket/consult'));
 const ChunkHandler = require('chunk-handler');
 var chunk = new ChunkHandler();
 
-// Set true to print the console.log
-const wsdebug = F.config.ws_debug;
-
 function base64FileHandler(dataString,filename) {
     var matches = dataString.split(';base64,');
 
@@ -59,6 +56,9 @@ function base64FileHandler(dataString,filename) {
 }
 
 F.on("load", function() {
+    // Set true to print the console.log
+    const wsdebug = F.config.ws_debug;
+    
     this.io = socketio.listen(this.server).attach(this.server, {pingTimeout: F.config.ws_ping_timeout});
 
     this.io.on('connection',function(socket){
