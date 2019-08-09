@@ -5,3 +5,5 @@ node_modules/
 tmp/
 debug.pid
 package-lock.json
+public/files/*
+public/images/*

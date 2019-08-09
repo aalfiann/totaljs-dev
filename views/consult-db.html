@@ -1,8 +1,51 @@
 @{title('Total.js with socket.io')}
 
 <script>
-	console.log(JSON.parse('@{!model.contoh}'));
-	var socket=io.connect('http://127.0.0.1:7780');
+	function getBestSize(length,split=3) {
+        length = parseInt(length);
+        split = parseInt(split);
+        if(split < 1 || split > 5) throw new Error('Split value must be between 1-5');
+        var max = (split * 10);
+        var start = (max-(Math.ceil(max/10)));
+        var slice = (max-start);
+        switch(true) {
+            case (length <= 1000000 && length > 750000):
+                return Math.ceil(length/(max-(slice * 1)));
+            case (length <= 750000 && length > 500000):
+                return Math.ceil(length/(max-(slice * 2)));
+            case (length <= 500000 && length > 250000):
+                return Math.ceil(length/(max-(slice * 3)));
+            case (length <= 250000 && length > 100000):
+                return Math.ceil(length/(max-(slice * 4)));
+            case (length <= 100000 && length > 75000):
+                return Math.ceil(length/(max-(slice * 5)));
+            case (length <= 75000 && length > 50000):
+                return Math.ceil(length/(max-(slice * 6)));
+            case (length <= 50000 && length > 25000):
+                return Math.ceil(length/(max-(slice * 7)));
+            case (length <= 25000 && length > 10000):
+                return Math.ceil(length/(max-(slice * 8)));
+            case (length <= 10000 && length > 5000):
+                return Math.ceil(length/(max-(slice * 9)));
+            case (length <= 5000 && length > 1000):
+                return Math.ceil(length/2);
+            case (length <= 1000 && length > 1):
+                return Math.ceil(length/1);
+            default:
+                return Math.ceil(length/max);
+        }
+	}
+
+	function makeChunk(value,size) {
+		var numChunks = value.length / size + .5 | 0, chunks = new Array(numChunks);
+		for(var i = 0, o = 0; i < numChunks; ++i, o += size) {
+			chunks[i] = value.substr(o, size);
+		}
+		return chunks;
+	}
+	
+	// console.log(JSON.parse('@{!model.contoh}'));
+	var socket=io.connect('http://127.0.0.1:7780',{transports: [ 'polling']});
 	//var socket=io.connect('http://api2.getmedik.co.id:8880');
 
 	usertype = parseInt('@{model.usertype}');
@@ -13,6 +56,42 @@
 		console.log('connect to server is successful');
 	});
 
+	function sendChunk(value){
+		socket.emit('chunkOpen',{name:'xxx'});
+		socket.on('chunkReady',function(data) {
+			console.log(value.length);
+			var arr = makeChunk(value,getBestSize(value.length));
+		
+			// sending chunk
+			for(var i = 0;i<arr.length;i++) {
+				socket.emit('chunkSend', {
+					name:'xxx',
+					chunk:arr[i],
+					part:i,
+					length:arr.length,
+					message:{
+						transaksi_konsul_id:conversation_id,
+						akun_id:userid,
+						akun_type:usertype,
+						message_type_id:2
+					}
+				});
+			}
+		});
+	}
+
+	socket.on('chunkTimeout',function(data){
+		console.log(JSON.stringify(data));
+	});
+
+	socket.on('chunkError',function(data){
+		console.log(JSON.stringify(data));
+	});
+
+	socket.on('chunkComplete',function(data){
+		console.log(JSON.stringify(data));
+	});
+	
 	socket.on('newmessage', function (data) {
 		console.log(JSON.stringify(data));
 	});
@@ -67,7 +146,7 @@
 			akun_id:userid,
 			akun_type:usertype,
 			transaksi_konsul_id:conversation_id,
-			message_type_id:1,
+			message_type_id:2,
 			isi_messages:value
 		};
 		socket.emit('message',message);
@@ -116,6 +195,7 @@
 			<input type="text" id="message" class="form-control" placeholder="Input message..." onkeypress="keyPress(event)" onfocus="typingMessage()">
 			<span class="input-group-btn">
 				<button class="btn btn-success" type="button" onclick="sendMessage()"><span class="fa fa-envelope"> </span>SUBMIT</button>
+				<button class="btn btn-danger" type="button" onclick="sendChunk(document.getElementById('message').value)"><span class="fa fa-file"> </span>SEND CHUNK</button>
 			</span>
 		</div><!-- /input-group -->
 	</div>

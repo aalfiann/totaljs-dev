@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"main": "debug.js",
 	"dependencies": {
+		"chunk-handler": "^1.1.2",
 		"node-json-transform": "^1.0.19",
 		"revalidator": "^0.3.1",
 		"socket.io": "latest",
