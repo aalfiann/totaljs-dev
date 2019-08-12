@@ -3,10 +3,16 @@ exports.install = function() {
 	CORS('/api/*', ['get', 'post', 'put', 'delete'], true);
 	
 	ROUTE('/', plain_version);
-	ROUTE('/.well-known/acme-challenge/{id}', plain_version);
+	ROUTE('/.well-known/acme-challenge/{id}', acme);
 	F.route('/socket', view_socket);
 	ROUTE('/timeout_test', timeout_test, [ timeout= 15000 ]);
 };
+
+function acme() {
+	var self = this;
+	var content = 'this is the content from certbot certonly --manual';
+	self.plain(content);
+}
 
 function plain_version() {
 	var self = this;
