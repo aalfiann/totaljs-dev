@@ -6,7 +6,14 @@
 - go inside the source directory
 - install `$ npm install`
 - run `$ node debug.js`
-- open browser `http://127.0.0.1:8000`
+- open browser `https://127.0.0.1:8000`
+
+## Generate SSL Key and Cert Self Signed
+If you want to run with https protocol with your domain you should generate **new SSL key and cert**
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt
+sudo chmod 644 server.key
+```
 
 ## Answer Test
 1. Rest API is required `x-token` header for products only

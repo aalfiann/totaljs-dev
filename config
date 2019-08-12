@@ -10,7 +10,7 @@ mail_address_reply              : your@yourwebsite.com
 mail_address_copy               :
 
 // socket settings
-ws_upload_base                  : http://api2.getmedik.co.id
+ws_upload_base                  : https://192.168.88.85:8000
 ws_ping_timeout                 : 60000
 ws_chunk_timeout                : 60000
 ws_debug                        : true

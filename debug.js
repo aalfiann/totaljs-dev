@@ -3,8 +3,12 @@
 // Total.js - framework for Node.js platform
 // https://www.totaljs.com
 // ===================================================
-
+const fs = require('fs');
 const options = {};
+options.https = {
+    key: fs.readFileSync('localhost.key'),
+    cert: fs.readFileSync('localhost.crt')
+}
 
 // options.ip = '127.0.0.1';
 // options.port = parseInt(process.argv[2]);
@@ -24,4 +28,4 @@ F.on("load", function() {
     this.io = socketio.listen(this.server);
 });
 
-F.http('debug');
+F.https('debug',options);
