@@ -45,7 +45,7 @@
 	}
 	
 	// console.log(JSON.parse('@{!model.contoh}'));
-	var socket=io.connect('https://192.168.88.85:7780',{transports: [ 'polling']});
+	var socket=io.connect('http://192.168.88.85:7780',{transports: [ 'polling']});
 	//var socket=io.connect('http://api2.getmedik.co.id:8880');
 
 	usertype = parseInt('@{model.usertype}');

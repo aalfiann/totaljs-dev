@@ -3,6 +3,7 @@ exports.install = function() {
 	CORS('/api/*', ['get', 'post', 'put', 'delete'], true);
 	
 	ROUTE('/', plain_version);
+	ROUTE('/.well-known/acme-challenge/{id}', plain_version);
 	F.route('/socket', view_socket);
 	ROUTE('/timeout_test', timeout_test, [ timeout= 15000 ]);
 };
