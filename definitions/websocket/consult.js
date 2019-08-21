@@ -83,9 +83,17 @@ function loadMessages(transaksi_konsul_id,socket){
  * @return {string} 
  */
 function insertMessages(data){
+    var tanggal = new Date().toISOString().replace("T", " ").replace("Z", "").substr(0,19)
     try {
         var sql = NOSQL('tr_chat_messages');
         sql.insert(data);
+        var nosql = NOSQL('tr_transaksi_konsul');
+        nosql.modify({date_latest_chat:tanggal}).make(function(builder){
+            builder.where('transaksi_konsul_id',data.transaksi_konsul_id);
+            builder.callback(function(err){
+                if(err) console.log(err);
+            });
+        });
         return helper.BalikanHeader('true','Pesan masuk','',JSON.stringify(data));
     } catch (err) {
         return helper.BalikanHeader("false","Ada kesalahan... " + err,"error","");

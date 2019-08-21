@@ -40,8 +40,8 @@ function base64FileHandler(dataString,filename) {
     var ext = matches[0].split('/');
     var file = filename+'.'+ext[1];
     var date = new Date();
-    switch(matches[0].toString().toLowerCase()) {
-        case 'image':
+    switch(true) {
+        case (matches[0].toString().toLowerCase().includes('image')):
             var subdir = 'images/socket/'+date.format('yyyy')+'/'+date.format('MM')+'/'+date.format('dd')+'/';
             break;
         default:
