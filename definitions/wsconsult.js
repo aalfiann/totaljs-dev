@@ -38,7 +38,7 @@ F.on("load", function() {
     const wsdebug = F.config.ws_debug;
     
     if(F.config.ws_heroku) {
-        this.io = socketio.listen(process.env.PORT).attach(this.server, {pingTimeout: F.config.ws_ping_timeout});
+        this.io = socketio.listen(this.server).attach(this.server, {pingTimeout: F.config.ws_ping_timeout});
     } else {
         this.io = socketio.listen(F.config.ws_port).attach(this.server, {pingTimeout: F.config.ws_ping_timeout});
     }
