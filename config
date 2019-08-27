@@ -14,3 +14,4 @@ ws_upload_base                  : http://127.0.0.1:8000
 ws_ping_timeout                 : 60000
 ws_chunk_timeout                : 60000
 ws_debug                        : true
+ws_port                         : 8880

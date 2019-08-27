@@ -5,6 +5,7 @@ exports.install = function() {
 	ROUTE('/', plain_version);
 	ROUTE('/.well-known/acme-challenge/{id}', acme);
 	F.route('/socket', view_socket);
+	F.route('/socket2', view_socket);
 	ROUTE('/timeout_test', timeout_test, [ timeout= 15000 ]);
 };
 

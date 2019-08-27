@@ -18,15 +18,4 @@ const options = {};
 // options.inspector = 9229;
 // options.watch = ['private'];
 
-//require('total.js/debug')(options);
-
-require('total.js')
-
-// Below here is required to run socket client in UI only
-var socketio = require('socket.io');
-
-F.on("load", function() {
-    this.io = socketio.listen(this.server);
-});
-
-F.http('debug',options);
+require('total.js/debug')(options);

@@ -1,31 +1,4 @@
-// ===================================================
-// FOR DEVELOPMENT
-// Total.js - framework for Node.js platform
-// https://www.totaljs.com
-// ===================================================
 const fs = require('fs');
-const options = {};
-
-// options.https = {
-//     key: fs.readFileSync('localhost.key'),
-//     cert: fs.readFileSync('localhost.crt')
-// }
-
-// options.ip = '127.0.0.1';
-// options.port = parseInt(process.argv[2]);
-// options.config = { name: 'Total.js' };
-// options.sleep = 3000;
-// options.inspector = 9229;
-// options.watch = ['private'];
-
-//require('total.js/debug')(options);
-
-require('total.js')
-
-//======================================
-// BELOW HERE IS TO RUN SOCKET SERVER   
-//======================================
-options.port = '7780';
 const uuidv4 = require('uuid/v4');
 var socketio = require('socket.io');
 var revalidator = require('revalidator');
@@ -64,7 +37,7 @@ F.on("load", function() {
     // Set true to print the console.log
     const wsdebug = F.config.ws_debug;
     
-    this.io = socketio.listen(this.server).attach(this.server, {pingTimeout: F.config.ws_ping_timeout});
+    this.io = socketio.listen(F.config.ws_port).attach(this.server, {pingTimeout: F.config.ws_ping_timeout});
 
     this.io.on('connection',function(socket){
         
@@ -274,5 +247,3 @@ F.on("load", function() {
 
     });
 });
-
-F.http('debug',options);
