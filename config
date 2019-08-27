@@ -15,3 +15,4 @@ ws_ping_timeout                 : 60000
 ws_chunk_timeout                : 60000
 ws_debug                        : true
 ws_port                         : 8880
+ws_heroku                       : true
