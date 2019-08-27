@@ -10,7 +10,7 @@ mail_address_reply              : your@yourwebsite.com
 mail_address_copy               :
 
 // socket settings
-ws_upload_base                  : http://127.0.0.1:8000
+ws_upload_base                  : https://thawing-escarpment-54169.herokuapp.com
 ws_ping_timeout                 : 60000
 ws_chunk_timeout                : 60000
 ws_debug                        : true
