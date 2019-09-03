@@ -1,1 +1,1 @@
-web: node debug.js
+web: node debug-heroku.js
