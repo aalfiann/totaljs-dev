@@ -23,7 +23,7 @@ require('total.js/debug')(options);
 // Below here is for heroku awaker
 var unirest = require('unirest');
 setInterval(function(){
-    var url = 'https://thawing-escarpment-54169.herokuapp.com';
+    var url = 'https://getmedik-wschat.herokuapp.com';
     unirest.get(url)
         .end(function (response) {
             console.log(response.body);
